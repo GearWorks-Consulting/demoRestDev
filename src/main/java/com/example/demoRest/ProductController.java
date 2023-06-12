@@ -20,6 +20,11 @@ public class ProductController
         List<Product> products = productService.findAll();
         return ResponseEntity.ok().body(products);
     }
+    @GetMapping(value = "/printTest")
+    public ResponseEntity<String> printTest() {
+        String products = productService.printTest();
+        return ResponseEntity.ok().body(products);
+    }
 
 
 
@@ -50,10 +55,10 @@ public class ProductController
 
 
     //Gem boardJSON loakt i mappe med given name
-    @PostMapping("/saveGame/{name}")
-    public ResponseEntity<BoardTemplate> getBoardById(@RequestBody String boardJson, @PathVariable String name) {
-        Product p = productService.getProductById(id);
-        return ResponseEntity.ok().body(p);
-    }
+ //   @PostMapping("/saveGame/{name}")
+   // public ResponseEntity<BoardTemplate> getBoardById(@RequestBody String boardJson, @PathVariable String name) {
+     //   BoardTemplate boardTemplate = productService.getProductById(name);
+       // return ResponseEntity.ok().body(p);
+    //}
 
 }

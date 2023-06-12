@@ -8,4 +8,5 @@ public interface IProductService
     boolean addProduct(Product p);
     public boolean updateProduct(int id, Product p);
     public boolean deleteProductById(int id);
+    public String printTest();
 }
