@@ -2,6 +2,7 @@ package com.example.demoRest;
 
 import java.util.List;
 
+
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +21,7 @@ public class ProductController
         return ResponseEntity.ok().body(products);
     }
 
-    @PostMapping("/products")
-    public ResponseEntity<String > addProduct(@RequestBody Product p) {
-        boolean added = productService.addProduct(p);
-        if(added)
-            return ResponseEntity.ok().body("added");
-        else
-            return ResponseEntity.internalServerError().body("not added");
 
-    }
-
-    @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable int id) {
-        Product p = productService.getProductById(id);
-        return ResponseEntity.ok().body(p);
-    }
 
     @GetMapping("/api/users")
     public ResponseEntity<String> kapa()
@@ -47,30 +34,26 @@ public class ProductController
         return ResponseEntity.ok().body(jsonString);
     }
 
-    @PostMapping("/api/users")
-    public ResponseEntity<String>  getUser(@RequestBody String userJson)
-    {
-        Gson gson = new Gson();
-        User user = gson.fromJson(userJson, User.class);
-        System.out.println(user.name);
-        return ResponseEntity.ok().body("ok");
-    }
 
     @PostMapping("/api/some-resource")
     public ResponseEntity<String > printString(@RequestBody String p) {
             return ResponseEntity.ok().body("added");
     }
 
-    @PutMapping("/products/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestBody Product p) {
-        boolean added = productService.updateProduct(id, p);
-        return ResponseEntity.ok().body("updated");
+
+    @GetMapping("/loadGame/{name}")
+    public ResponseEntity<String> getProductById(@PathVariable String name) {
+        //Hent savegame fra lokal folder
+        String gameboardString = "editthis";
+        return ResponseEntity.ok().body(gameboardString);
     }
 
-    @DeleteMapping("/products/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
-        boolean deleted = productService.deleteProductById(id);
-        return ResponseEntity.ok().body("deleted");
+
+    //Gem boardJSON loakt i mappe med given name
+    @PostMapping("/saveGame/{name}")
+    public ResponseEntity<BoardTemplate> getBoardById(@RequestBody String boardJson, @PathVariable String name) {
+        Product p = productService.getProductById(id);
+        return ResponseEntity.ok().body(p);
     }
 
 }
