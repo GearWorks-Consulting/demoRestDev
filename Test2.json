@@ -1,0 +1,60 @@
+{
+  "width": 0,
+  "height": 0,
+  "players": [
+    {
+      "heading": "SOUTH",
+      "tokens": 0,
+      "program": [
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        }
+      ],
+      "cards": [
+        {
+          "card": {
+            "command": "FORWARD",
+            "observers": []
+          },
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        },
+        {
+          "visible": false
+        }
+      ]
+    }
+  ],
+  "phase": "INITIALISATION",
+  "step": 0,
+  "stepMode": false
+}
