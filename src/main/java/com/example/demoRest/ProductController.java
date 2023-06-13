@@ -3,15 +3,15 @@ package com.example.demoRest;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -52,36 +52,33 @@ public class ProductController {
 
 
     @GetMapping("/loadGame/{name}")
-    public ResponseEntity<String> getProductById(@PathVariable String name) {
-        //Hent savegame fra lokal folder
-        String gameboardString = "editthis";
-        return ResponseEntity.ok().body(gameboardString);
+    public ResponseEntity<String> loadGame(@PathVariable String name) {
+        // Load the game from the local folder
+        try {
+            File file = new File(name + ".json");
+            String gameboardString = Files.readString(file.toPath());
+            return ResponseEntity.ok().body(gameboardString);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
     //Gem boardJSON loakt i mappe med given name
     @PostMapping("/saveGame/{name}")
-    public ResponseEntity<String> getBoardById(@PathVariable String name,@RequestBody String boardJson) {
+    public ResponseEntity<String> saveGame(@PathVariable String name, @RequestBody String boardJson) {
+        File file = new File(name + ".json");
+        GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
+        Gson gson = gsonBuilder.create();
 
-        File file = new File(name + "." + "json");
-        GsonBuilder simpleBuilder = new GsonBuilder().
-                setPrettyPrinting();
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(boardJson);
+            String prettyPrintedJson = gson.toJson(jsonElement);
 
-
-        Gson gson = simpleBuilder.create();
-        FileWriter fileWriter = null;
-        JsonWriter writer = null;
-
-        try {
-            fileWriter = new FileWriter(file);
-            fileWriter.write(boardJson);
-            writer = gson.newJsonWriter(fileWriter);
-            gson.toJson(boardJson, boardJson.getClass(), writer);
-            writer.close();
+            fileWriter.write(prettyPrintedJson);
             return ResponseEntity.ok().body("ok");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-    }
-}
+    }}
