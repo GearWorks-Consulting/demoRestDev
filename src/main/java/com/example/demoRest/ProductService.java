@@ -10,6 +10,9 @@ public class ProductService implements IProductService
 {
     //creating an object of ArrayList
     ArrayList<Product> products = new ArrayList<Product>();
+    private boolean completeMove;
+    private int max;
+    private int currentCount;
 
     public ProductService() {
     //adding products to the List
@@ -32,6 +35,26 @@ public class ProductService implements IProductService
     public String printTest()
     {
         return "test";
+    }
+
+    @Override
+    public void updateMaxPlayers(int maxPlayers) {
+    max=maxPlayers;
+    }
+
+    @Override
+    public void updatePlayerCounter(int counter ) {
+        currentCount=counter;
+    }
+
+    @Override
+    public int getPlayerCounter() {
+        return currentCount;
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return max;
     }
 
     @Override
@@ -62,7 +85,17 @@ public class ProductService implements IProductService
         }
         return false;
     }
+    public boolean isCompleteMove() {
+        return completeMove;
+    }
 
+    public int updateMaxPlayers(){
+        return updateMaxPlayers();
+    }
+
+    public void setCompleteMove(boolean completeMove) {
+        this.completeMove = completeMove;
+    }
     @Override
     public boolean deleteProductById(int id) {
         ArrayList<Product> newProducts = new ArrayList<Product>();

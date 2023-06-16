@@ -21,6 +21,7 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
+
     @GetMapping(value = "/products")
     public ResponseEntity<List<Product>> getProduct() {
         List<Product> products = productService.findAll();
@@ -81,4 +82,42 @@ public class ProductController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }}
+
+    }
+    @PostMapping("/setCompleteMove")
+    public ResponseEntity<String> setCompleteMove( @RequestBody boolean isCompletemove) {
+        productService.setCompleteMove(isCompletemove);
+
+        return ResponseEntity.ok().body("ok");
+
+    }
+    @GetMapping(value = "/isCompleteMove")
+    public ResponseEntity<Boolean> isCompleteMove() {
+        boolean products = productService.isCompleteMove();
+        return ResponseEntity.ok().body(products);
+    }
+
+    @PostMapping("/updateMaxPlayers")
+    public ResponseEntity<String> updateMaxPlayers(@RequestBody String maxPlayers) {
+        productService.updateMaxPlayers(Integer.parseInt(maxPlayers));
+        return ResponseEntity.ok().body("Max players updated successfully");
+    }
+
+    @GetMapping(value = "/getMaxPlayers")
+    public ResponseEntity<Integer> getMaxPlayers() {
+        int maxPlayers = productService.getMaxPlayers();
+        return ResponseEntity.ok().body(maxPlayers);
+    }
+    @PostMapping("/updatePlayerJoinedCounter")
+    public ResponseEntity<String> updatePlayerCount(@RequestBody String maxPlayers) {
+        productService.updatePlayerCounter(Integer.parseInt(maxPlayers));
+        return ResponseEntity.ok().body("Max players updated successfully");
+    }
+
+    @GetMapping(value = "/getPlayerCounter")
+    public ResponseEntity<Integer> getPlayerCount() {
+        int playerCount = productService.getPlayerCounter();
+        return ResponseEntity.ok().body(playerCount);
+    }
+
+}
